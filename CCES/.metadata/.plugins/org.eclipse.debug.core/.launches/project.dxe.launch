@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.analog.crosscore.debug.launchType">
+<stringAttribute key="AutomaticBreakpoint.LastSelectedProcId" value="0"/>
+<intAttribute key="AutomaticBreakpointCount" value="9"/>
+<stringAttribute key="AutomaticBreakpointDescription0" value="End of program"/>
+<stringAttribute key="AutomaticBreakpointDescription1" value="Before overlay is swapped in"/>
+<stringAttribute key="AutomaticBreakpointDescription2" value="After overlay is swapped in"/>
+<stringAttribute key="AutomaticBreakpointDescription3" value="Fatal error occurred in RTL"/>
+<stringAttribute key="AutomaticBreakpointDescription4" value="Start of program"/>
+<stringAttribute key="AutomaticBreakpointDescription5" value="Used for stdio"/>
+<stringAttribute key="AutomaticBreakpointDescription6" value="Used for assert"/>
+<stringAttribute key="AutomaticBreakpointDescription7" value="Stack overflow detected"/>
+<stringAttribute key="AutomaticBreakpointDescription8" value="Fatal exception occurred in RTL"/>
+<stringAttribute key="AutomaticBreakpointEnabled0" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled1" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled2" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled3" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled4" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled5" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled6" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled7" value="true"/>
+<stringAttribute key="AutomaticBreakpointEnabled8" value="true"/>
+<stringAttribute key="AutomaticBreakpointHardware0" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware1" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware2" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware3" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware4" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware5" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware6" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware7" value="false"/>
+<stringAttribute key="AutomaticBreakpointHardware8" value="false"/>
+<stringAttribute key="AutomaticBreakpointLabel0" value="___lib_prog_term"/>
+<stringAttribute key="AutomaticBreakpointLabel1" value="__ov_start"/>
+<stringAttribute key="AutomaticBreakpointLabel2" value="__ov_end"/>
+<stringAttribute key="AutomaticBreakpointLabel3" value="__fatal_error"/>
+<stringAttribute key="AutomaticBreakpointLabel4" value="main"/>
+<stringAttribute key="AutomaticBreakpointLabel5" value="__primIO"/>
+<stringAttribute key="AutomaticBreakpointLabel6" value="__dbg_assert"/>
+<stringAttribute key="AutomaticBreakpointLabel7" value="__stack_overflowed"/>
+<stringAttribute key="AutomaticBreakpointLabel8" value="__fatal_exception"/>
+<intAttribute key="AutomaticBreakpointProcId0" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId1" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId2" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId3" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId4" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId5" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId6" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId7" value="0"/>
+<intAttribute key="AutomaticBreakpointProcId8" value="0"/>
+<stringAttribute key="AutomaticBreakpointPublic0" value="true"/>
+<stringAttribute key="AutomaticBreakpointPublic1" value="false"/>
+<stringAttribute key="AutomaticBreakpointPublic2" value="false"/>
+<stringAttribute key="AutomaticBreakpointPublic3" value="true"/>
+<stringAttribute key="AutomaticBreakpointPublic4" value="true"/>
+<stringAttribute key="AutomaticBreakpointPublic5" value="false"/>
+<stringAttribute key="AutomaticBreakpointPublic6" value="false"/>
+<stringAttribute key="AutomaticBreakpointPublic7" value="true"/>
+<stringAttribute key="AutomaticBreakpointPublic8" value="true"/>
+<stringAttribute key="AutomaticBreakpointSetAtLocation0" value="___lib_prog_term"/>
+<stringAttribute key="AutomaticBreakpointSetAtLocation3" value="__fatal_error"/>
+<stringAttribute key="AutomaticBreakpointSetAtLocation4" value="0x124593"/>
+<stringAttribute key="AutomaticBreakpointSetAtLocation5" value="__primIO"/>
+<stringAttribute key="AutomaticBreakpointUser0" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser1" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser2" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser3" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser4" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser5" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser6" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser7" value="false"/>
+<stringAttribute key="AutomaticBreakpointUser8" value="false"/>
+<stringAttribute key="CustomBoardSupportFileName" value=""/>
+<stringAttribute key="Debug Target" value="Sharc Emulators/EZ-KIT Lites"/>
+<stringAttribute key="Device0.HaltCoreAfterConnect0" value="b1"/>
+<stringAttribute key="Device0.HaltPeripherals0" value="b1"/>
+<booleanAttribute key="EnableCustomizations" value="false"/>
+<stringAttribute key="Platform" value="ADSP-21489 EZ-KIT Lite via Debug Agent"/>
+<stringAttribute key="Processor" value="ADSP-21489"/>
+<stringAttribute key="TargetOptions.LastSelectedProcId" value="0"/>
+<intAttribute key="com.analog.crosscore.debug.debugModel.ATTR_LOADPROGRAM_PROPERTIES.0" value="770"/>
+<intAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROGRAM_COUNT.0" value="1"/>
+<stringAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROGRAM_NAME.0" value="Debug\project.dxe"/>
+<stringAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROGRAM_SIREV.0" value="0.2"/>
+<intAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROJECT_CORE" value="-1"/>
+<intAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROJECT_CORE.0" value="-1"/>
+<stringAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROJECT_NAME.0" value="project"/>
+<stringAttribute key="com.analog.crosscore.debug.debugModel.ATTR_WORKING_DIR.0" value=""/>
+<stringAttribute key="com.analog.crosscore.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;Context string&quot;/&gt;&#13;&#10;"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value=""/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/project"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+</launchConfiguration>
