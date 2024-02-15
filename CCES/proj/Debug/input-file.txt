@@ -1,0 +1,6 @@
+"src/proj.doj"
+"system/adi_initialize.doj"
+"system/sru/sru_config.doj"
+"system/startup_ldf/app_IVT.doj"
+"system/startup_ldf/app_heaptab.doj"
+"system/startup_ldf/app_startup.doj"
