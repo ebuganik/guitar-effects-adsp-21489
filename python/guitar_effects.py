@@ -52,7 +52,7 @@ def flanger_effect(x, amplitude, rate, delay_s, sample_rate):
 
 
 def bitcrusher_effect(x, d_fac, bit_depth):
-    # principal controls 1 and 2
+    # basic controls 1 and 2
     y = np.zeros(round(len(x)/d_fac))
     j = 0
     # 1 - downsampling 
