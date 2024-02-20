@@ -13,6 +13,6 @@ python guitar_effects.py
 
 ### C
 <p align="justify"> It's necessary to install CrossCore® Embedded Studio, which serves as an Integrated Development Environment (IDE), specialized for working with DSP processors. Clone the repository and open project within CCES. 
-To run 'Debug', Debug Configuration needs to be set to SHARC -> ADSP-21489 -> EZ-KIT or Simulation. For the purposes of this project, ADSP-21489 EzKit board was used.
+Build project, and to run 'Debug', set Debug Configuration to SHARC -> ADSP-21489 -> EZ-KIT or Simulation. For the purposes of this project, ADSP-21489 EzKit board was used.
 
 NOTE: Files with processed samples are located in the Debug folder of CCES project.
