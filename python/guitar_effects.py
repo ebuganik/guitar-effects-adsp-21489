@@ -47,19 +47,19 @@ def flanger_effect(x, amplitude, rate, delay_s, sample_rate):
     return y
 
 
-# def bitcrusher_effect(x, d_fac, bit_depth):
-#     # basic controls 1 and 2
-#     y = np.zeros(round(len(x)/d_fac))
-#     j = 0
-#     # 1 - downsampling 
-#     for i in range (0,len(x),d_fac):
-#         y[j] = x[i]
-#         j+=1
-#     # 2 - quantizer
-#     max_value = 2**bit_depth
-#     for j in range (len(y)):
-#         y[j] = np.ceil(max_value* y[j]) * (1/max_value)
-#     return y
+def bitcrusher_effect(x, d_fac, bit_depth):
+    # basic controls 1 and 2
+    y = np.zeros(round(len(x)/d_fac))
+    j = 0
+    # 1 - downsampling 
+    for i in range (0,len(x),d_fac):
+        y[j] = x[i]
+        j+=1
+    # 2 - quantizer
+    max_value = 2**bit_depth
+    for j in range (len(y)):
+        y[j] = np.ceil(max_value* y[j]) * (1/max_value)
+    return y
 
 # # Example of Bit Crusher with LPF
 # def bit_crusher_effect2(x_norm, downsampling, bit_depth):
@@ -296,7 +296,7 @@ if __name__ == "__main__":
     
     # BITCRUSHER
     
-    guitar_w_bitcrusher = bit_crusher_effect(norm_dec, 3, 3)
+    guitar_w_bitcrusher = bitcrusher_effect(norm_dec, 3, 3)
     wavfile.write("audio-py-bitcrusher.wav", 3675, guitar_w_bitcrusher)
     mono_plot(guitar_w_bitcrusher, "Bitcrusher in Python")
     guitar_w_bitcrusher_c= read_from_file("./audio_w_bitcrusher.txt")
