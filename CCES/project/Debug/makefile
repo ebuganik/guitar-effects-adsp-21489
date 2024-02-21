@@ -92,7 +92,7 @@ all: project.dxe
 project.dxe: $(LDF_SRCS) $(SRC_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: CrossCore SHARC Linker'
-	cc21k -proc ADSP-21489 -si-revision 0.2 -T C:/Users/User/OneDrive/Desktop/workspace/project/system/startup_ldf/app.ldf -no-mem -L C:/Users/User/OneDrive/Desktop/workspace/project/Debug/system/startup_ldf -flags-link -MDCORE0,-MDDEBUG -add-debug-libpaths -o project.dxe @input-file.txt
+	cc21k -proc ADSP-21489 -si-revision 0.2 -T C:/Users/User/OneDrive/Desktop/final2/project/system/startup_ldf/app.ldf -no-mem -L C:/Users/User/OneDrive/Desktop/final2/project/Debug/system/startup_ldf -flags-link -MDCORE0,-MDDEBUG -add-debug-libpaths -o project.dxe @input-file.txt
 	@echo 'Finished building target: $@'
 	@echo ' '
 

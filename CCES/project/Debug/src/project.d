@@ -20,6 +20,8 @@ src/project.doj: ../src/project.h
 src/project.doj: ../src/audio.h
 src/project.doj: ../../../../../../../Analog\ Devices/CrossCore\ Embedded\ Studio\ 2.12.0/SHARC/include/builtins.h
 src/project.doj: ../../../../../../../Analog\ Devices/CrossCore\ Embedded\ Studio\ 2.12.0/SHARC/include/sys/builtins_support.h
+src/project.doj: ../../../../../../../Analog\ Devices/CrossCore\ Embedded\ Studio\ 2.12.0/SHARC/include/filter.h
+src/project.doj: ../../../../../../../Analog\ Devices/CrossCore\ Embedded\ Studio\ 2.12.0/SHARC/include/complex.h
 src/project.doj: ../../../../../../../Analog\ Devices/CrossCore\ Embedded\ Studio\ 2.12.0/SHARC/include/stdlib.h
 src/project.doj: ../../../../../../../Analog\ Devices/CrossCore\ Embedded\ Studio\ 2.12.0/SHARC/include/stdlib_21xxx.h
 src/project.doj: ../../../../../../../Analog\ Devices/CrossCore\ Embedded\ Studio\ 2.12.0/SHARC/include/builtins.h

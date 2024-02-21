@@ -1,40 +1,40 @@
-22:02:10 **** Incremental Build of configuration Debug for project project ****
+15:57:38 **** Incremental Build of configuration Debug for project project ****
 make all 
 'Building file: ../system/startup_ldf/app_IVT.s'
 'Invoking: CrossCore SHARC Assembler'
-easm21k -file-attr ProjectName="project" -proc ADSP-21489 -si-revision 0.2 -g -DCORE0 -D_DEBUG @includes-dd231f36959f5f80ee5c2e8dab09e917.txt -swc -gnu-style-dependencies -MM -Mo "system/startup_ldf/app_IVT.d" -o "system/startup_ldf/app_IVT.doj" "../system/startup_ldf/app_IVT.s"
+easm21k -file-attr ProjectName="project" -proc ADSP-21489 -si-revision 0.2 -g -DCORE0 -D_DEBUG @includes-d4c4e9e707129e45ec10fba7d8ebfe91.txt -swc -gnu-style-dependencies -MM -Mo "system/startup_ldf/app_IVT.d" -o "system/startup_ldf/app_IVT.doj" "../system/startup_ldf/app_IVT.s"
 'Finished building: ../system/startup_ldf/app_IVT.s'
 ' '
 'Building file: ../system/startup_ldf/app_heaptab.c'
 'Invoking: CrossCore SHARC C/C++ Compiler'
-cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-3ffa01a3681a0dc8425e9f5939ea0039.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "system/startup_ldf/app_heaptab.d" -o "system/startup_ldf/app_heaptab.doj" "../system/startup_ldf/app_heaptab.c"
+cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-053fdfe95a233f7c8fb9f4a93ec8a990.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "system/startup_ldf/app_heaptab.d" -o "system/startup_ldf/app_heaptab.doj" "../system/startup_ldf/app_heaptab.c"
 'Finished building: ../system/startup_ldf/app_heaptab.c'
 ' '
 'Building file: ../system/startup_ldf/app_startup.s'
 'Invoking: CrossCore SHARC Assembler'
-easm21k -file-attr ProjectName="project" -proc ADSP-21489 -si-revision 0.2 -g -DCORE0 -D_DEBUG @includes-dd231f36959f5f80ee5c2e8dab09e917.txt -swc -gnu-style-dependencies -MM -Mo "system/startup_ldf/app_startup.d" -o "system/startup_ldf/app_startup.doj" "../system/startup_ldf/app_startup.s"
+easm21k -file-attr ProjectName="project" -proc ADSP-21489 -si-revision 0.2 -g -DCORE0 -D_DEBUG @includes-d4c4e9e707129e45ec10fba7d8ebfe91.txt -swc -gnu-style-dependencies -MM -Mo "system/startup_ldf/app_startup.d" -o "system/startup_ldf/app_startup.doj" "../system/startup_ldf/app_startup.s"
 'Finished building: ../system/startup_ldf/app_startup.s'
 ' '
 'Building file: ../system/sru/sru_config.c'
 'Invoking: CrossCore SHARC C/C++ Compiler'
-cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-3ffa01a3681a0dc8425e9f5939ea0039.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "system/sru/sru_config.d" -o "system/sru/sru_config.doj" "../system/sru/sru_config.c"
+cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-053fdfe95a233f7c8fb9f4a93ec8a990.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "system/sru/sru_config.d" -o "system/sru/sru_config.doj" "../system/sru/sru_config.c"
 'Finished building: ../system/sru/sru_config.c'
 ' '
 'Building file: ../system/adi_initialize.c'
 'Invoking: CrossCore SHARC C/C++ Compiler'
-cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-3ffa01a3681a0dc8425e9f5939ea0039.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "system/adi_initialize.d" -o "system/adi_initialize.doj" "../system/adi_initialize.c"
+cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-053fdfe95a233f7c8fb9f4a93ec8a990.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "system/adi_initialize.d" -o "system/adi_initialize.doj" "../system/adi_initialize.c"
 'Finished building: ../system/adi_initialize.c'
 ' '
 'Building file: ../src/project.c'
 'Invoking: CrossCore SHARC C/C++ Compiler'
-cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-3ffa01a3681a0dc8425e9f5939ea0039.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "src/project.d" -o "src/project.doj" "../src/project.c"
+cc21k -c -file-attr ProjectName="project" -proc ADSP-21489 -flags-compiler --no_wrap_diagnostics -si-revision 0.2 -g -DCORE0 -DDO_CYCLE_COUNTS -D_DEBUG @includes-053fdfe95a233f7c8fb9f4a93ec8a990.txt -structs-do-not-overlap -no-const-strings -no-multiline -warn-protos -double-size-32 -swc -gnu-style-dependencies -MD -Mo "src/project.d" -o "src/project.doj" "../src/project.c"
 'Finished building: ../src/project.c'
 ' '
 'Building target: project.dxe'
 'Invoking: CrossCore SHARC Linker'
-cc21k -proc ADSP-21489 -si-revision 0.2 -T C:/Users/User/OneDrive/Desktop/workspace/project/system/startup_ldf/app.ldf -no-mem -L C:/Users/User/OneDrive/Desktop/workspace/project/Debug/system/startup_ldf -flags-link -MDCORE0,-MDDEBUG -add-debug-libpaths -o project.dxe @input-file.txt
+cc21k -proc ADSP-21489 -si-revision 0.2 -T C:/Users/User/OneDrive/Desktop/final2/project/system/startup_ldf/app.ldf -no-mem -L C:/Users/User/OneDrive/Desktop/final2/project/Debug/system/startup_ldf -flags-link -MDCORE0,-MDDEBUG -add-debug-libpaths -o project.dxe @input-file.txt
 'Finished building target: project.dxe'
 ' '
 
-22:02:14 Build Finished. 0 errors, 0 warnings. (took 3s.886ms)
+15:57:41 Build Finished. 0 errors, 0 warnings. (took 3s.742ms)
 

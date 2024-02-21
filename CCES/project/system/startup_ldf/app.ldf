@@ -1,5 +1,5 @@
 /*
-** ADSP-21489 linker description file generated on Feb 19, 2021 at 19:54:16.
+** ADSP-21489 linker description file generated on Feb 21, 2021 at 09:27:03.
 */
 /*
 ** Copyright (C) 2000-2023 Analog Devices Inc., All Rights Reserved.
@@ -538,20 +538,15 @@ PROCESSOR p0
       /*$VDSG<insert-new-sections-at-the-end>                   */
       /* Text inserted between these $VDSG comments will be preserved */
       /*$VDSG<insert-new-sections-at-the-end>                   */
-      
-       dxe_seg_sram
+        dxe_seg_sram
       {
-      
-        INPUT_SECTIONS($OBJECTS(seg_sram))
+      	INPUT_SECTIONS($OBJECTS(seg_sram))
       	
       } > mem_sram
       
-      
-       dxe_seg_dram
+          dxe_seg_dram
       {
-      
-      INPUT_SECTIONS($OBJECTS(seg_dram))
-      	
+      	INPUT_SECTIONS($OBJECTS(seg_dram))
       } > mem_sdram
       
    } /* SECTIONS */

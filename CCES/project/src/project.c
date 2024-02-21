@@ -1,6 +1,8 @@
-/*****************************************************************************
- * project.c
- *****************************************************************************/
+/**
+ *
+ *  Source file for implementing and applying audio effects algorithm.
+ */
+
 #include <sys/platform.h>
 #include <def21489.h>
 #include <sru21489.h>
@@ -9,6 +11,7 @@
 #include "project.h"
 #include "audio.h"
 #include "builtins.h"
+#include "filter.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -18,17 +21,18 @@
 
 #define SAMPLE_RATE 11025
 #define DEC_FAC 3
-/*LFO parameters*/
-#define DEPTH 0.7
-#define RATE 5.0
-
 #define PI 3.14159265358979
-/*#define lfo(i) (1+DEPTH*sinf(2.0*PI*i*RATE/SAMPLE_RATE))*/
 
-/*#pragma optimize_for_speed*/
+#define PROFILING
 
-	cycle_t start_count;
-	cycle_t stop_count;
+#ifdef PROFILING
+cycle_t start_count;
+cycle_t stop_count;
+#endif
+
+// Placing arrays within sections of SRAM or SDRAM (seg_sram or seg_dram)
+
+//#pragma optimize_for_speed
 
 #pragma section("seg_sram")
 float32_t audio_w_effect[NUM_SAMPLES];
@@ -37,53 +41,55 @@ float32_t temp_array[NUM_SAMPLES];
 #pragma section("seg_sram")
 float32_t audio_dec_effect[NUM_SAMPLES/DEC_FAC];
 
+//float dm state[NUM_TAPS+1]; for filtering within Bitcrusher effect
 
 void delay_effect(const float32_t* restrict audio_input, float32_t* restrict audio_output, float32_t delay_s, float32_t gain)
 {
-	/* naive implementation*/
-	/*int delay_samples = (int)(delay_s*SAMPLE_RATE);*/
+
 	int delay_samples = conv_fix(delay_s*SAMPLE_RATE);
 	int i,k;
 
-  for(k=0, i = delay_samples; i < NUM_SAMPLES; i++, k++)
+	for(i = delay_samples; i<NUM_SAMPLES ; i++)
   {
 	  temp_array[i] = audio_input[i-delay_samples];
-	  /*  delayed_value = gain*temp_array[k];*/
-	  audio_output[k] = audio_input[k]+gain*temp_array[k];
-	  /*audio_output[k] = audio_input[k]+delayed_value;*/
   }
- /* for(k=0; k<NUM_SAMPLES; k++)
+
+  for(k=0; k<NUM_SAMPLES; k++)
   {
-	  audio_output[k] = audio_input[k]+amplitude*temp_array[k];
-  }*/
+	  audio_output[k] = audio_input[k]+gain*temp_array[k];
+  }
 }
 
 void echo_effect(const float32_t* restrict audio_data, float32_t* restrict audio_output, uint32_t stages, float32_t delay_s, float32_t gain)
 
 {
-		/*naive implementation*/
 		float32_t stage_amp;
-		/*int delay_samples = (int)(SAMPLE_RATE*delay_s);*/
 		int delay_samples = conv_fix(delay_s*SAMPLE_RATE);
 		int i,k;
-/*#pragma loop_unroll 10*/
-		for(i=0, k=delay_samples; i<NUM_SAMPLES; i++, k++)
+
+		/*for(i=0,k=delay_samples; i<NUM_SAMPLES; i++, k++)*/
+
+		/*for(i=0; i<NUM_SAMPLES; i++)*/
+
+			for(i=0,k=delay_samples; i<NUM_SAMPLES; i++, k++)
 		{
 			audio_output[i] = audio_data[i];
 			temp_array[k] = audio_data[k-delay_samples];
 		}
+
 		/*for(k=delay_samples; k<NUM_SAMPLES; k++)
 		{
 			temp_array[k] = audio_data[k-delay_samples];
 		}*/
+
 	__builtin_assert(stages> 1); /*for stages = 1, it's better to call delay function*/
-/*#pragma vector_for(10)*/
-/*#pragma loop_unroll 10*/
+
+// #pragma vector_for(10)
+
 	for(i=1; i<stages+1; i++)
 		{
-			/*stage_amp = (float32_t)(gain/i);*/
-			stage_amp = gain*frecipsf((float32_t)i);
-/*#pragma vector_for(10)*/
+			stage_amp = (float32_t)(gain/i);
+
 			for(k=0; k<NUM_SAMPLES; k++)
 				{
 				audio_output[k]+=stage_amp*temp_array[k];
@@ -92,18 +98,28 @@ void echo_effect(const float32_t* restrict audio_data, float32_t* restrict audio
 
 }
 
-/*inline float32_t lfo(int i) {return 1+DEPTH*sinf(2.0*PI*i*RATE/SAMPLE_RATE);}*/
-
-void tremolo_effect(const float32_t* restrict audio_data, float32_t* restrict audio_output)
+//inline float32_t lfo(int i) {return 1+DEPTH*sinf(2.0*PI*i*RATE/SAMPLE_RATE);}
+void tremolo_effect(const float32_t* restrict audio_data, float32_t* restrict audio_output, float32_t depth, float32_t rate)
 {
-	int i;
-/*#pragma SIMD_for*/
-/*#pragma no_vectorization*/
+	int i,j;
+	float32_t lfo_w = 2.0*PI*rate/SAMPLE_RATE;
+
+//#pragma SIMD_for
+
+	/*for(j=0; j<NUM_SAMPLES; j++)
+	{
+		temp_array[j] = sinf(lfo_w*j);
+	}*/
+
+//#pragma vector_for(10)
+
 	for(i=0; i<NUM_SAMPLES; i++)
 	{
-		audio_output[i] = audio_data[i]*1+DEPTH*sinf(2.0*PI*i*RATE/SAMPLE_RATE);
+		//audio_output[i] = audio_data[i]*(1+depth*sinf(2.0*PI*i*rate/SAMPLE_RATE)
+		audio_output[i] = audio_data[i]*(1+depth*sinf(lfo_w*i));
 		/*call for function in define or inline*/
-		/*audio_output[i] = audio_data[i]*lfo(i);*/
+		//audio_output[i] = audio_data[i]*lfo(i);
+		//audio_output[i] = audio_data[i] *(1+depth*temp_array[i]);
 	}
 
 }
@@ -113,10 +129,14 @@ void flanger_effect(const float32_t* restrict audio_data, float32_t* restrict au
 	int i,d;
 	int delay_samples = conv_fix(delay_s*SAMPLE_RATE);
 	float32_t lfo_w = 2.0*PI*rate/SAMPLE_RATE;
+
+// #pragma vector_for(10)
+
 	for(i = 0 ; i<NUM_SAMPLES; i++)
 {
 		/*d = (int)(delay_samples*(1 + sinf(2.0*PI* i * rate/SAMPLE_RATE)));*/
-		d = (int)(delay_samples*(1 + sinf(lfo_w*i)));
+		/*d = (int)(delay_samples*(1 + sinf(lfo_w*i)));*/
+		d = conv_fix(delay_samples*(1 + sinf(lfo_w*i)));
 		/*if(d<i)*/
 		if(expected_true(i-d > 0))
 		{
@@ -131,16 +151,21 @@ void flanger_effect(const float32_t* restrict audio_data, float32_t* restrict au
 }
 void bitcrusher_effect(const float32_t* restrict audio_data, float32_t* restrict audio_output, uint32_t bit_depth)
 {
+	/*Addition to bitcrusher
+	int k;
+	for(k=0; k<NUM_SAMPLES; k++)
+		{ firf(audio_data, temp_array, LP_FILTER, state, NUM_SAMPLES, NUM_TAPS);}*/
+
 
 	int i, j;
-	/*uint32_t max_value = powf(2,bit_depth);*/
 	uint32_t  max_value = 1<<bit_depth;
+
+// #pragma vector_for(10)
 
 	for(i = 0, j = 0; i < NUM_SAMPLES; i += DEC_FAC, j++)
 	{
 		/*audio_output[j] = audio_data[i];*/
 		/* Built-in functions for floating point and integer type*/
-		/*audio_output[j] = (int)(max_value*audio_data[i])/((float32_t)max_value);*/
 		audio_output[j] = conv_fix(max_value*audio_data[i])*frecipsf((float32_t)max_value);
 	}
 	/*for (i=0; i<j; i++)
@@ -158,11 +183,8 @@ int main(int argc, char *argv[])
 	 */
 	adi_initComponents();
 	FILE *fp;
-	double secs;
-	volatile clock_t clock_start;
-	volatile clock_t clock_stop;
-	int arr_size = sizeof(audio_w_effect)/sizeof(audio_w_effect[0]);
-	int dec_arr_size = sizeof(audio_dec_effect)/sizeof(audio_dec_effect[0]);
+	uint32_t arr_size = sizeof(audio_w_effect)/sizeof(audio_w_effect[0]);
+	uint32_t dec_arr_size = sizeof(audio_dec_effect)/sizeof(audio_dec_effect[0]);
 	initSRU();
 	turnOff();
 
@@ -172,12 +194,12 @@ int main(int argc, char *argv[])
 
 	/* Delay effect*/
 	float32_t delay_time = 0.5;
-	float32_t delay_amp = 0.5;
+	float32_t delay_gain = 0.5;
 
 	/*Echo effect*/
 	uint32_t stages = 3;
-	float32_t stage_delay = 0.2;
-	float32_t gain = 1.0;
+	float32_t stage_delay = 0.5;
+	float32_t echo_gain = 1.0;
 
 	/* Tremolo effect*/
 	float32_t lfo_depth = 0.7;
@@ -186,74 +208,103 @@ int main(int argc, char *argv[])
 	/*Flanger effect*/
 	float32_t flanger_delay = 0.001;
 	float32_t flanger_rate = 2.0;
-	float32_t amplitude = 0.8;
+	float32_t flanger_gain = 0.8;
 
 	/*Bit Crusher effect*/
 	uint32_t bit_depth = 3;
 
+	/**PROFILING**/
+	delay_cycles(3500000);
+	sysreg_bit_set(sysreg_FLAGS, FLG5);
 
 	/**FUNCTION CALL**/
 	delay_cycles(3500000);
-	sysreg_bit_set(sysreg_FLAGS, FLG5);
-	/*clock_start = clock();*/
-	START_CYCLE_COUNT(start_count);
-	/*delay_cycles(3500000);*/
-	/*sysreg_bit_set(sysreg_FLAGS, FLG6);*/
-	/*delay_effect(audio_data, audio_w_effect, delay_time, delay_amp);*/
-	/*tremolo_effect(audio_data, audio_w_effect);*/
-	echo_effect(audio_data, audio_w_effect, stages, delay_time, gain);
-	/*bitcrusher_effect(audio_data, audio_dec_effect, bit_depth);*/
-	/*flanger_effect(audio_data, audio_w_effect, flanger_delay, flanger_rate, amplitude);*/
-	/*delay_cycles(3500000);*/
-	/*SRU(HIGH,DAI_PB03_I);*/
-	STOP_CYCLE_COUNT(stop_count,start_count);
-	/*clock_stop = clock();*/
-	PRINT_CYCLES("Cycles number: ",stop_count);
-	/*secs = ((double)(clock_stop - clock_start))/CLOCKS_PER_SEC;*/
-	/*printf("Time taken to proceed function is %e seconds\n", secs);*/
+	sysreg_bit_set(sysreg_FLAGS, FLG6);
 
+	#ifdef PROFILING
+	START_CYCLE_COUNT(start_count);
+	#endif
+
+	///////////////////////////////////////////////////////////////////
+	//printf("Delay effect function\n");
+	//delay_effect(audio_data, audio_w_effect, delay_time, delay_gain);
+	//write_samples("audio_w_delay.txt", audio_w_effect, arr_size);
+	//////////////////////////////////////////////////////////////////
+	//printf("Echo effect function\n");
+	//echo_effect(audio_data, audio_w_effect, stages, delay_time, echo_gain);
+	//write_samples("audio_w_echo.txt", audio_w_effect, arr_size);
+	///////////////////////////////////////////////////////////////////
+	//printf("Tremolo effect function\n");
+	//tremolo_effect(temp_array, audio_w_effect, lfo_depth, lfo_rate);
+	//write_samples("audio_w_tremolo.txt", audio_w_effect, arr_size);
+	////////////////////////////////////////////////////////////////////
+	//printf("Flanger effect function\n");
+	//flanger_effect(audio_data, audio_w_effect, flanger_delay, flanger_rate, flanger_gain);
+	//write_samples("audio_w_flanger.txt", audio_w_effect, arr_size);
+	///////////////////////////////////////////////////////////////////
+	printf("Bitcrusher effect function\n");
+	bitcrusher_effect(audio_data, audio_dec_effect, bit_depth);
+
+	/**FUNCTION OUTPUT*/
+	delay_cycles(3500000);
+	SRU(HIGH,DAI_PB03_I);
+	write_samples("audio_w_bitcrusher.txt", audio_dec_effect, dec_arr_size);
 	/**WRITING TO FILE**/
 	delay_cycles(3500000);
 	SRU(HIGH,DAI_PB04_I);
-	START_CYCLE_COUNT(start_count);
-	printf("\nWriting samples to file, number of samples is %d \n", arr_size);
-	write_samples("audio_w_echo.txt", audio_w_effect, arr_size);
+
+	//////////////////////////////////////////////////////////////////
+
+#ifdef PROFILING
 	STOP_CYCLE_COUNT(stop_count,start_count);
-	PRINT_CYCLES("Cycles number: ",stop_count);
+	PRINT_CYCLES("Cycles number:",stop_count);
+#endif
+
+/*To use cascaded output, for example, combine as it follows
+	printf("Cascaded output\n");
+	delay_effect(audio_data, audio_w_effect, delay_time, delay_gain);
+	tremolo_effect(audio_w_effect, temp_array, lfo_depth, lfo_rate);
+	bitcrusher_effect(temp_array, audio_dec_effect, bit_depth);
+	write_samples("audio_w_cascaded_output.txt", audio_dec_effect, dec_arr_size);/
+	/**END**/
 	delay_cycles(3500000);
 	SRU(HIGH,DAI_PB17_I);
-	printf("Program ends.\n");
+
 	return 0;
+
 	}
 
-void write_samples(const char *outputFile, float32_t *audio_output, int arr_size)
-	{
+int write_samples(const char *outputFile, float32_t *audio_output, int arr_size)
+{
 	FILE *fp = fopen(outputFile, "w");
+	int third_samples = arr_size/3;
 	int half_samples = arr_size/2;
 	int i = 0;
-	/*printf("%d", half_samples);*/
-	/*unsigned int arr_size = sizeof(audio_output)/sizeof(audio_output[0]);*/
-	/*printf("%d", arr_size);*/
 
 	if(fp == NULL) {
 		printf("File couldn't be opened!\n");
+		return -1;
 	}else
-		{
-		printf("File opened!\n");
-		SRU(HIGH,DAI_PB15_I);
-		}
+		{	printf("File opened!\n"); }
 
 	for(int i=0; i<arr_size;i++)
 	{
-		fprintf(fp, "%f\n", audio_output[i]);
-		if(i>=half_samples)
-		{
-			SRU(HIGH,DAI_PB16_I);
+	 fprintf(fp, "%f\n", audio_output[i]);
+
+	if (i == third_samples){
+    // printf("Reached one-third of total samples!\n");
+	SRU(HIGH,DAI_PB15_I);
+		}
+
+	if (i == half_samples){
+	// printf("Reached half of total samples!\n");
+	SRU(HIGH,DAI_PB16_I);
 		}
 	}
 
 	fclose(fp);
 	printf("File closed!\n");
+	return 0;
 
 	}
 
@@ -307,3 +358,6 @@ void delay_cycles(uint32_t delayCount)
 /* delayCount = 1 => 38ns delay */
 	while(delayCount--);
 	}
+
+
+
